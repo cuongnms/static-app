@@ -1,0 +1,32 @@
+name: Static page CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: self-hosted   # chạy trên server nội bộ của bạn
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build React app
+        run: npm run build
+
+      # Deploy bằng cách copy build vào thư mục web server
+      - name: Deploy build to web root
+        run: |
+          rm -rf /var/www/static-app/*
+          cp -r dist/* /var/www/static-app/
+
