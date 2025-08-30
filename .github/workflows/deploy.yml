@@ -8,9 +8,10 @@ on:
 jobs:
   build-and-deploy:
     runs-on: self-hosted   # chạy trên server nội bộ của bạn
-    run: echo "Actor is ${{ github.actor }}"
 
     steps:
+      - name: Show GitHub Actor
+        run: echo "Actor is ${{ github.actor }}"
       - name: Checkout code
         uses: actions/checkout@v3
 
