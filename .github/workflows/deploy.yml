@@ -8,6 +8,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: self-hosted   # chạy trên server nội bộ của bạn
+    if: github.actor == 'cuongnms'
 
     steps:
       - name: Show GitHub Actor
