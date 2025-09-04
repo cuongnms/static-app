@@ -17,16 +17,14 @@ function App() {
     evtSource.onopen = () => console.log("SSE connected ✅");
 
     evtSource.onmessage = (event) => {
-      console.log(event);
       setMessage(event.data);
+      evtSource.close();
     };
 
     evtSource.onerror = (err) => {
       console.error("SSE error:", err);
-      evtSource.close();
     };
 
-    evtSource.close();
   };
 
   return (
