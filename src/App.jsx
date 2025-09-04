@@ -15,6 +15,7 @@ function App() {
     );
 
     evtSource.onmessage = (event) => {
+      console.log(event);
       setMessage(event.data);
     };
 
