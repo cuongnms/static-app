@@ -1,10 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "./assets/vite.svg";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+  const [message, setMessage] = useState("");
+
+  const upload = () => {
+
+    setCount((count) => count + 1);
+    const evtSource = new EventSource(
+      `http://192.168.0.103:8080/events?count=${count}`
+    );
+
+    evtSource.onmessage = (event) => {
+      setMessage(event.data);
+    };
+
+    evtSource.onerror = (err) => {
+      console.error("SSE error:", err);
+      evtSource.close();
+    };
+  };
 
   return (
     <>
@@ -17,9 +35,9 @@ function App() {
         </a>
       </div>
       <h1>Vite + React + CICD</h1>
-      
+      <h2>{message}</h2>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
+        <button onClick={() => upload()}>
           count is {count}
         </button>
         <p>
@@ -30,7 +48,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
