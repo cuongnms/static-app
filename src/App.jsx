@@ -25,6 +25,8 @@ function App() {
       console.error("SSE error:", err);
       evtSource.close();
     };
+
+    evtSource.close();
   };
 
   return (
