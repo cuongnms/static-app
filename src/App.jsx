@@ -14,6 +14,8 @@ function App() {
       `http://192.168.0.103:8080/events?count=${count}`
     );
 
+    evtSource.onopen = () => console.log("SSE connected ✅");
+
     evtSource.onmessage = (event) => {
       console.log(event);
       setMessage(event.data);
